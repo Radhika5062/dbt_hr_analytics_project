@@ -1,0 +1,10 @@
+[project]
+name = "dbt-hr-analytics-project"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "dbt-core>=1.8.7",
+    "dbt-snowflake>=1.8.4",
+]
