@@ -1,0 +1,121 @@
+sources:
+  - name: staging
+    description: This is the source of truth
+    database: hr_analytics
+    schema: staging
+    tables:
+      - name: hr_data
+        description: Includes all HR data for each employee in one place Each row corresponds to a different employee
+        columns:
+          - name: age
+            description: Age of the employee
+            
+          - name: attrition
+            description: Employee Attrition
+            
+          - name: businesstravel
+            description: Does employee travel for business
+            
+          - name: dailyrate
+            description: Daily rate of the employee
+            
+          - name: department
+            description: Department of the employee
+            
+          - name: distancefromhome
+            description: Distance between employee and his/her home
+            
+          - name: education
+            description: Education of employee of the employee
+            
+          - name: educationfield
+            description: Field in which employee did their education of the employee
+            
+          - name: employeecount
+            description: Count of the employee. We will be deprecating this column in next layer. 
+
+          - name: employeenumber
+            description: Unique identifier for the employee
+            
+          - name: environmentsatisfaction
+            description: Is employee satisfied with the environment in office
+            
+          - name: gender
+            description: Gender of the employee
+            
+          - name: hourlyrate
+            description: Hourly Rate of the employee
+            
+          - name: jobinvolvement
+            description: Involvement of the employee in job
+            
+          - name: joblevel
+            description: Job level of the employee
+            
+          - name: jobrole
+            description: Designation of employee
+            
+          - name: jobsatisfaction
+            description: Job satisfaction of the employee
+            
+          - name: maritalstatus
+            description: Marital Status of the employee
+            
+          - name: monthlyincome
+            description: Monthly Income of the employee
+            
+          - name: monthlyrate
+            description: Monthly Rate of the employee
+            
+          - name: numcompaniesworked
+            description: Number of companies that the employee has previously worked in
+            
+          - name: over18
+            description: Is the employee over 18 years of age
+            
+          - name: overtime
+            description: Does employee work overtime
+            
+          - name: percentsalaryhike
+            description: Percent of salary hike received by the employee
+            
+          - name: performancerating
+            description: Performance Rating of the employee
+            
+          - name: relationshipsatisfaction
+            description: Relationship satisfaction of the employee
+            
+          - name: standardhours
+            description: Standard number of hours worked the employee
+            
+          - name: stockoptionlevel
+            description: Stock Option Level of the employee
+            
+          - name: totalworkingyears
+            description: Total number of years worked by employee
+            
+          - name: trainingtimeslastyear
+            description: Number of times employee attended training last year
+            
+          - name: worklifebalance
+            description: Employee score for work life balance. Do they think they have good work life balance with the work in company. 
+            
+          - name: yearsatcompany
+            description: Number of years employee has worked in the company
+            
+          - name: yearsincurrentrole
+            description: Number of years in the current role for the employee
+            
+          - name: yearssincelastpromotion
+            description: Number of years since last promotion for the employee
+           
+          - name: yearswithcurrmanager
+            description: Number of years the employee has worked with the current manager
+            
+          - name: created_at
+            description: Time at which the data was created
+            
+
+
+
+
