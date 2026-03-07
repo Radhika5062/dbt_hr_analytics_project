@@ -1,0 +1,41 @@
+models:
+  - name: silver_hr_data_clean_with_lookup_values
+    description: This table contains one row per employee. 
+                 Grain -> employee_number
+                 This model joins the data coming from bronze layer with all the lookup tables present in seed. This is done to get the values of columns instead of rating that is present in bronze layer.
+    columns:
+      - name: education_value
+        description: This column is the value corresponding to the education column from bronze layer.
+
+      - name: environment_satisfaction_value
+        description: This column is the value corresponding to environment_satisfaction column from bronze layer.
+
+      - name: job_involvement_value
+        description: This column is the value corresponding to job_involvement column from bronze layer.
+
+      - name: job_level_value
+        description: This column is the value corresponding to job_level column from bronze layer.
+
+      - name: job_satisfaction_value
+        description: This column is the value corresponding to job_satisfaction column from bronze layer.
+   
+      - name: performance_rating_value
+        description: This column is the value corresponding to performance_rating column from bronze layer.
+ 
+      - name: relationship_satisfaction_value
+        description: This column is the value corresponding to relationship_satisfaction column from bronze layer.
+ 
+      - name: created_at
+        description: Date when the data was created. 
+  
+  - name: silver_hr_data_quarantine_with_lookup_values
+    description: Hr Records that failed validation checks and were quarantined. These records are excluded from analytics but retained for audit and data quality analysis.
+    columns:
+      - name: employee_number
+        description: Unique Employee Identifier.
+      
+      - name: quarantine_reason
+        description: Reason why the record was quarantined
+      
+      - name: quarantined_at
+        description: Time when the record was quarantined

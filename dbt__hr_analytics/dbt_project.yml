@@ -38,5 +38,18 @@ models:
     bronze:
       +materialized: view
       +schema: bronze
+    silver:
+      +materialized: table
+      +schema: silver
+          
     +materialized: view
     +schema: demo
+
+seeds:
+  dbt__hr_analytics:
+    +schema: seeds
+
+
+tests:
+  dbt__hr_analytics:
+    +schema: failed_records

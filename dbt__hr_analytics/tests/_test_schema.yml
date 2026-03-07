@@ -1,0 +1,13 @@
+data_tests:
+  - name: test_invalid_tenure
+    description: >
+          This is the test to ensure that the years_at_company column value is always less than or equal to          total_working_years. 
+                 Logically speaking if someone has worked prior to this job then their total years would be more than years at company and this is first job of an employee then both column values should
+  
+  - name: test_no_overlap_clean_quarantine
+    description: >
+      This test ensures that there are no rows which are present in both silver clean model and silver quarantine model. This is because if something is flagged as quarantine then it should not be present in clean model. 
+
+  - name: test_temporal_integrity_created_at
+    description: >
+      This test ensures that the created date always falls between 1 Jan 2000 and today's date. This company was created on 1 Jan 2000 which is why there should be no records prior to this date. 

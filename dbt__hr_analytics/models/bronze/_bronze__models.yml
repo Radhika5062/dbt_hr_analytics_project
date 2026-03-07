@@ -1,0 +1,110 @@
+models:
+  - name: bronze_hr_data
+    description: This is the bronze model for hr_data coming from snowflake. In this model we are doing following things - 1. Renaming column names to use snake case. 2. Casting the columns in their right datatype. 3. Converting the values into standard values. 
+    columns:
+      - name: age
+        description: Age of the employee
+
+      - name: attrition
+        description: Employee Attrition. Converted the Yes and No values for this field coming from source to 1 and 0 respectively. 
+
+      - name: business_travel
+        description: Does employee travel for business. Cleanup values from source. 
+
+      - name: daily_rate
+        description: Daily rate of the employee
+
+      - name: department
+        description: Department of the employee
+
+      - name: distance_from_home
+        description: Distance between employee and his/her home
+
+      - name: education
+        description: Education of employee of the employee
+
+      - name: education_field
+        description: Field in which employee did their education of the employee
+
+      - name: employee_number
+        description: Unique identifier for the employee
+
+      - name: environment_satisfaction
+        description: Is employee satisfied with the environment in office
+
+      - name: gender
+        description: Gender of the employee
+
+      - name: hourly_rate
+        description: Hourly Rate of the employee
+
+      - name: job_involvement
+        description: Involvement of the employee in job
+
+      - name: job_level
+        description: Job level of the employee
+
+      - name: job_role
+        description: Designation of employee
+
+      - name: job_satisfaction
+        description: Job satisfaction of the employee
+
+      - name: marital_status
+        description: Marital Status of the employee
+
+      - name: monthly_income
+        description: Monthly Income of the employee
+
+      - name: monthly_rate
+        description: Monthly Rate of the employee
+
+      - name: num_companies_worked
+        description: Number of companies that the employee has previously worked in
+
+      - name: over_18
+        description: Is the employee over 18 years of age
+
+      - name: overtime
+        description: Does employee work overtime
+
+      - name: percent_salary_hike
+        description: Percent of salary hike received by the employee
+
+      - name: performance_rating
+        description: Performance Rating of the employee
+
+      - name: relationship_satisfaction
+        description: Relationship satisfaction of the employee
+
+      - name: standard_hours
+        description: Standard number of hours worked the employee
+
+      - name: stock_option_level
+        description: Stock Option Level of the employee
+
+      - name: total_working_years
+        description: Total number of years worked by employee
+
+      - name: training_times_last_year
+        description: Number of times employee attended training last year
+
+      - name: work_life_balance
+        description: Employee score for work life balance. Do they think they have good work life balance with the work in company. 
+
+      - name: years_at_company
+        description: Number of years employee has worked in the company
+
+      - name: years_in_current_role
+        description: Number of years in the current role for the employee
+
+      - name: years_since_last_promotion
+        description: Number of years since last promotion for the employee
+
+      - name: years_with_current_manager
+        description: Number of years the employee has worked with the current manager
+
+      - name: created_at
+        description: Created Date for data
+
+  

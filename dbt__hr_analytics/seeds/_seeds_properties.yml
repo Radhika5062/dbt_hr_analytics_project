@@ -1,0 +1,108 @@
+seeds:
+  - name: Education_Lookup
+    description: This seed file contains the education levels and their corresponding descriptions.
+    columns:
+      - name: Education_Level
+        description: This is unique identifier for the education levels.
+      - name: Education_Value
+        description: >
+          This is the value corresponding to the education level namely
+                     Tertiary Qualitfication
+                     Diploma
+                     Bachelor Degree
+                     Masters Degree
+                     Phd Degree
+
+  
+  - name: Environment_Satisfaction_Lookup
+    description: This seed file contains the environment satisfaction levels and their corresponding values.
+    columns:
+      - name: Environment_Satisfaction_Level
+        description: This is unique identifier for the environment satisfaction levels.
+      - name: Environment_Satisfaction_Value
+        description: >
+          This is the value corresponding to the environment satisfaction level namely
+                      Extremely unsatisfied
+                      Unsatisfied
+                      Satisfied
+                      Extremely satisfied
+
+  - name: Job_Involvement_Lookup
+    description: This seed file contains the job involvement levels and their corresponding values.
+    columns:
+      - name: Job_Involvement_Level
+        description: This is unique identifier for the job involvement levels.
+      - name: Job_Involvement_Value
+        description: >
+          This is the value corresponding to the job involvement level namely 
+                      Below Expectation
+                      Developing
+                      Meeting Expectation
+                      Exceeds Expectation
+                      Goes Above and Beyond
+  
+  - name: Job_Level_Lookup
+    description: This seed file contains the job levels and their corresponding values.
+    columns:
+      - name: Job_Level
+        description: This is unique identifier for the job levels.
+      - name: Job_Level_Value
+        description: >
+          This is the value corresponding to the job level namely 
+                      Beginner
+                      Developing
+                      Proficient
+                      Advanced
+                      Expert
+  - name: Job_Satisfaction_Lookup
+    description: This seed file contains the job satisfaction levels and their corresponding values.
+    columns:
+      - name: Job_Satisfaction_Level
+        description: This is unique identifier for the job satisfaction levels.   
+      - name: Job_Satisfaction_Value
+        description: 
+          This is the value corresponding to the job satisfaction level namely
+                      Extremely unsatisfied
+                      Unsatisfied
+                      Satisfied
+                      Extremely satisfied
+
+  - name: Performance_Rating_Lookup
+    description: This seed file contains the performance rating levels and their corresponding values.
+    columns:
+      - name: Performance_Rating_Level
+        description: This is unique identifier for the performance rating levels.
+      - name: Performance_Rating_Value  
+        description: 
+          This is the value corresponding to the performance rating level namely
+                     Below Expectation
+                     Developing
+                     Meeting Expectation
+                     Exceeds Expectation
+                     Goes Above and Beyond
+
+  - name: Relationship_Satisfaction_Lookup
+    description: This seed file contains the relationship satisfaction levels and their corresponding values.   
+    columns:
+      - name: Relationship_Satisfaction_Level
+        description: This is unique identifier for the relationship satisfaction levels.
+      - name: Relationship_Satisfaction_Value
+        description: >
+          This is the value corresponding to the relationship satisfaction level namely
+                      Extremely unsatisfied
+                      Unsatisfied
+                      Satisfied
+                      Extremely satisfied
+  
+  - name: Work_Life_Balance_Lookup
+    description: This seed file contains the work life balance levels and their corresponding values.
+    columns:
+      - name: Work_Life_Balance
+        description: This is unique identifier for the work life balance levels.
+      - name: Work_Life_Balance_Value
+        description: 
+          This is the value corresponding to the work life balance level namely
+                     Extremely Unsatisfied
+                     Unsatisfied
+                     Satisfied
+                     Extremely Satisfied

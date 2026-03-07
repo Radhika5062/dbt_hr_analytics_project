@@ -1,3 +1,4 @@
+
 with get_raw_data_and_cast as
     (  
         select
