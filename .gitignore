@@ -1,0 +1,5 @@
+
+target/
+dbt_packages/
+logs/
+dbt_hr_analytics_project_env/
