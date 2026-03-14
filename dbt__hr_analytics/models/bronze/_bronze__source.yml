@@ -9,112 +9,404 @@ sources:
         columns:
           - name: age
             description: Age of the employee
-            
+            data_tests:
+              - not_null:
+                  description: Every employee record must have an age.
+                  config:
+                    severity: warn
+
           - name: attrition
-            description: Employee Attrition
-            
+            description: Whether the employee has left the company.
+            data_tests:
+              - not_null:
+                  description: Attrition is a core HR metric and must not be null.
+                  config:
+                    severity: error
+              - accepted_values:
+                  description: Attrition must be either Yes or No.
+                  arguments:
+                    values: ['Yes', 'No']
+                  config:
+                    severity: error
           - name: businesstravel
-            description: Does employee travel for business
-            
+            description: Frequency with which the employee travels for business.
+            data_tests:
+              - not_null:
+                  description: Business travel classification must be present for every employee.
+                  config:
+                    severity: error
+              - accepted_values:
+                  description: Business travel must be one of the three accepted frequency values.
+                  arguments:
+                    values: ['Travel_Rarely', 'Travel_Frequently', 'Non-Travel']
+                  config:
+                    severity: error
           - name: dailyrate
             description: Daily rate of the employee
-            
+            data_tests:
+              - not_null:
+                  description: Daily rate should be present for all employees.
+                  config:
+                    severity: error
+
           - name: department
             description: Department of the employee
-            
+            data_tests:
+              - not_null:
+                  description: Every employee must be assigned to a department.
+                  config:
+                    severity: warn
+              - accepted_values:
+                  description: This test is used to confirm that the only department values that we are getting from source are the ones mentioned below. If anything else comes then this might break our processing so this test is to ensure that we only get values that are in the accepted values list.
+                  config:
+                    severity: error
+                  arguments:
+                    values: ['Sales', 'Research & Development', 'Human Resources']
           - name: distancefromhome
             description: Distance between employee and his/her home
-            
+            data_tests:
+              - not_null:
+                  description: Distance from home should be recorded for all employees.
+                  config:
+                    severity: warn
           - name: education
             description: Education of employee of the employee
-            
+            data_tests:
+              - not_null:
+                  description: Education level must be present for all employees.
+                  config:
+                    severity: warn
+              - accepted_values:
+                  description: >
+                   This test is used to ensure that the education of the employee is amongst the 
+                   5 categories that are defined below. 1 -> Lowest level and 5-> Highest level
+                  config:
+                    severity: error
+                  arguments:
+                    values: [1, 2, 3, 4, 5]
           - name: educationfield
             description: Field in which employee did their education of the employee
-            
+            data_tests:
+              - not_null:
+                  description: Education field must be present for all employees.
+                  config:
+                    severity: warn
+              - accepted_values:
+                  description: This test ensures that the field of education of the employee is amongst the values that are mentioned below.
+                  config:
+                    severity: error
+                  arguments:
+                    values: ['Human Resources', 'Life Sciences', 'Marketing', 'Medical', 'Other', 'Technical Degree']
           - name: employeecount
             description: Count of the employee. We will be deprecating this column in next layer. 
-
           - name: employeenumber
             description: Unique identifier for the employee
-            
+            data_tests:
+              - unique:
+                  description: This test is to ensure that the employee number is unique as this is the unique identifier for an employee in the organisation.
+                  config:
+                    severity: error
+              - not_null:
+                  description: This test is to ensure that if there is an employee then they are associated with an employee number and this field is not empty for them. 
+                  config:
+                    severity: error
           - name: environmentsatisfaction
             description: Is employee satisfied with the environment in office
-            
+            data_tests:
+              - not_null:
+                  description: > 
+                    Warn only — employees may not have completed the survey so nulls 
+                    are expected and should not block the pipeline.
+                  config:
+                    severity: warn
+              - accepted_values:
+                  description: If a value is present it must be between 1 and 4. 
+                               1 is the lowest and 4 is the highest satisfaction level.t
+                  config:
+                    severity: error
+                  arguments:
+                    values: [1, 2, 3, 4]
           - name: gender
             description: Gender of the employee
-            
+            data_tests:
+              - not_null:
+                  description: Gender must be present for all employee records.
+                  config:
+                    severity: error
+              - accepted_values:
+                  description: > 
+                    Accepted gender values from the current source system.
+                    Severity is set to warn (not error) to avoid pipeline failures if the source system
+                    introduces new values in the future (e.g. Non-Binary, Prefer not to say).
+                    Review and expand this list if new values appear. 
+                  config:
+                    severity: warn
+                  arguments:
+                    values: ['Male', 'Female', 'Other', 'Prefer not to say']
           - name: hourlyrate
             description: Hourly Rate of the employee
-            
+            data_tests:
+              - not_null:
+                  description: Hourly rate is required for all employees and must not be null.
+                  config:
+                    severity: error
+             
           - name: jobinvolvement
             description: Involvement of the employee in job
-            
+            data_tests:
+              - not_null:
+                  description: >
+                    Warn only — managers may not have completed the survey so nulls 
+                    are expected and should not block the pipeline.
+                  config: 
+                    severity: warn
+              - accepted_values:
+                  description: There are 4 levels of job involvement and this test helps to ensure that the employees job involvement is amonst these. 1 --> Lowest and 4 --> Highest
+                  config:
+                    severity: error
+                  arguments:
+                    values: [1, 2, 3, 4]
           - name: joblevel
             description: Job level of the employee
-            
+            data_tests:
+              - not_null:
+                  description: Job level must be present for all employees.
+                  config:
+                    severity: error
+              - accepted_values:
+                  description: There are 5 job levels and the employee needs to be in one of them.
+                  config:
+                    severity: error
+                  arguments: 
+                    values: [1, 2, 3, 4, 5]
           - name: jobrole
             description: Designation of employee
-            
+            data_tests:
+              - not_null:
+                  description: Every employee must have a job role assigned.
+                  config: 
+                    severity: error
+              - accepted_values:
+                  description: Employees role should be in one of the accepted values of this test. 
+                  config:
+                    severity: error
+                  arguments:
+                    values: ['Sales Executive', 
+                            'Research Scientist', 
+                            'Laboratory Technician',
+                            'Healthcare Representative',
+                            'Manager',
+                            'Manufacturing Director',
+                            'Human Resources', 
+                            'Sales Representative',
+                            'Research Director']
           - name: jobsatisfaction
             description: Job satisfaction of the employee
-            
+            data_tests:
+              - not_null:
+                  description: >
+                    Warn only — employees may not have completed the survey so nulls 
+                    are expected and should not block the pipeline.
+                  config:
+                    severity: warn
+              - accepted_values:
+                  description: This test is used to ensure that the job satisfaction is amongst the allowed 4 values. 
+                  config:
+                    severity: error
+                  arguments:
+                    values: [1, 2, 3, 4]
           - name: maritalstatus
             description: Marital Status of the employee
-            
+            data_tests:
+              - not_null:
+                  description: Employees may not have indicated about their marital status so this could be warn. 
+                  config:
+                    severity: warn
+              - accepted_values:
+                  description: This test is to ensure that the value for marital status for an employee is amongst the allowed values.
+                  config:
+                    severity: error
+                  arguments:
+                    values: ['Married', 'Divorced', 'Single']
           - name: monthlyincome
             description: Monthly Income of the employee
-            
+            data_tests:
+              - not_null:
+                  description: Monthly income is a critical compensation field and must not be null.
+                  config: 
+                    severity: warn
+
           - name: monthlyrate
             description: Monthly Rate of the employee
-            
+            data_tests:
+              - not_null:
+                  description: Monthly rate is required for all employees.
+                  config: 
+                    severity: warn
+
           - name: numcompaniesworked
             description: Number of companies that the employee has previously worked in
-            
+            data_tests:
+              - not_null:
+                  description: Warn only as the employees might not have provided this information.
+                  config:
+                    severity: warn
+
           - name: over18
-            description: Is the employee over 18 years of age
-            
+            description: Is the employee over 18 years of age. REDUNDANT column as we have the age of the employee. 
+            data_tests:
+              - not_null:
+                  description: Over 18 flag should be present for all employees.
+                  config:
+                    severity: warn
+              - accepted_values:
+                  description: This test ensures that the over18 column either has Y or N.
+                  config:
+                    severity: error
+                  arguments:
+                    values: ['Y', 'N']
           - name: overtime
             description: Does employee work overtime
-            
+            data_tests:
+              - not_null:
+                  description: Overtime status must be present for all employees.
+                  config:
+                    severity: warn
+              - accepted_values:
+                  description: This test ensures that this column contains onnly Yes or No.
+                  config:
+                    severity: error
+                  arguments:
+                    values: ['Yes', 'No']
           - name: percentsalaryhike
             description: Percent of salary hike received by the employee
-            
+            data_tests:
+              - not_null:
+                  description: Percent salary hike should be recorded for all employees.
+                  config:
+                    severity: warn
+
           - name: performancerating
             description: Performance Rating of the employee
-            
+            data_tests:
+              - not_null:
+                  description: >
+                    Warn only — managers may not have completed the survey so nulls 
+                    are expected and should not block the pipeline.
+                  config:
+                    severity: warn
+              - accepted_values:
+                  description: This test ensures that the performance rating is between 1 and 4. 1 --> Poor performance and 4 --> Going above and beyond in performance.
+                  config:
+                    severity: error
+                  arguments:
+                    values: [1, 2, 3, 4] 
           - name: relationshipsatisfaction
             description: Relationship satisfaction of the employee
-            
+            data_tests:
+              - not_null:
+                  description: >
+                    Warn only — employees may not have completed the survey so nulls 
+                    are expected and should not block the pipeline.
+                  config:
+                    severity: warn
+              - accepted_values:
+                  description: This test ensures that the relationship status rating provided by the employee is between 1 and 4.
+                  config:
+                    severity: error
+                  arguments:
+                    values: [1, 2, 3, 4]
           - name: standardhours
             description: Standard number of hours worked the employee
-            
+            data_tests:
+              - not_null:
+                  description: Standard hours should be present for all employees.
+                  config:
+                    severity: warn
+  
           - name: stockoptionlevel
             description: Stock Option Level of the employee
-            
+            data_tests:
+              - not_null:
+                  description: Stock option level must be recorded for all employees.
+                  config:
+                    severity: error
+              - accepted_values:
+                  description: This test ensures that the stock level option chosen by employee is amongst the allowed values.
+                  config:
+                    severity: error
+                  arguments:
+                    values: [0, 1, 2, 3]
           - name: totalworkingyears
             description: Total number of years worked by employee
-            
+            data_tests:
+              - not_null:
+                  description: Total working years should be present for all employees.
+                  config:
+                    severity: warn
+
           - name: trainingtimeslastyear
             description: Number of times employee attended training last year
-            
+            data_tests:
+              - not_null:
+                  description: Training times should be recorded for all employees.
+                  config:
+                    severity: warn
+
           - name: worklifebalance
             description: Employee score for work life balance. Do they think they have good work life balance with the work in company. 
-            
+            data_tests:
+              - not_null:
+                  description: >
+                    Warn only — employees may not have completed the survey so nulls 
+                    are expected and should not block the pipeline.
+                  config:
+                    severity: warn
+              - accepted_values:
+                  description: This test ensures that the work life balance rating provided by the employee is amongst the allowed values. 1 --> Lowest and 4 --> Higest. 
+                  config:
+                    severity: error
+                  arguments:
+                    values: [1, 2, 3, 4]
           - name: yearsatcompany
             description: Number of years employee has worked in the company
-            
+            data_tests:
+              - not_null:
+                  description: Years at company should be present for all employees.
+                  config:
+                    severity: warn
+
           - name: yearsincurrentrole
             description: Number of years in the current role for the employee
-            
+            data_tests:
+              - not_null:
+                  description: Years in current role is required for role tenure analysis and must not be null.
+                  config:
+                    severity: warn
+
           - name: yearssincelastpromotion
             description: Number of years since last promotion for the employee
-           
+            data_tests:
+              - not_null:
+                  description: Years since last promotion is required for career progression analysis and must not be null.
+                  config: 
+                    severity: warn
+
           - name: yearswithcurrmanager
             description: Number of years the employee has worked with the current manager
-            
+            data_tests:
+              - not_null:
+                  description: Years with current manager is required for management analysis and must not be null.
+                  config:
+                    severity: warn
+
           - name: created_at
             description: Time at which the data was created
-            
+            data_tests:
+              - not_null:
+                  description: All records must have a creation timestamp for audit and lineage tracking.
+                  config:
+                    severity: error
 
 
 
