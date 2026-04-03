@@ -1,0 +1,43 @@
+macros:
+  - name: clean_strings
+    description: This macro is used to clean string columns
+    arguments:
+      - name: column_name
+        description: This is the column that you need to clean. 
+        type: column
+  
+  - name: get_database
+    description: This macro is used to dynamically change the name of the database depending on the environment that we are working in. 
+    arguments:
+      - name: env 
+        description: This is to pass the name of the environment. 
+  
+  - name: income_band
+    description: This macro holds the business logic related to the monthly income. 
+    arguments:
+      - name: column_name
+        description: This is the column name that needs to be passed which contains the monthly income of the employees.
+        type: integer
+  
+  - name: schema_name
+    description: This macro is used to update the name of custom schema by removing the default schema name which is automatically added by dbt__hr_analytics
+    arguments:
+      - name: custom_schema_name
+        description: This is the name of the custom schema that is passed via config
+  
+  - name: test_custom_range
+    description: This is a generic dbt test to test whether the value of a particular column falls in a defined range or not. 
+    arguments:
+      - name: model
+        description: This is the name of the model on which this test needs to be applied. We get this from the yml file.
+      - name: column_name
+        description: This is the name of the column on which this test is applied.
+      - name: min_val
+        description: This is the minimum allowed value for the column.
+        type: integer
+      - name: max_val
+        description: This is the maximum allowed value for the column.
+        type: integer
+
+      
+  

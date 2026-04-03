@@ -1,3 +1,8 @@
+{{
+    config(
+        database = get_database(var('env'))
+    )
+}}
 
 with get_raw_data_and_cast as
     (  
@@ -6,19 +11,19 @@ with get_raw_data_and_cast as
         Attrition as attrition,	
         BusinessTravel as business_travel,	
         cast(DailyRate as int) as daily_rate,
-        Department as department,
+        {{ clean_strings('Department') }} as department,
         cast(DistanceFromHome as int) as distance_from_home,
         cast(Education as int) as education,
-        EducationField as education_field,
+        {{ clean_strings('EducationField') }} as education_field,
         cast(EmployeeNumber as int) as employee_number,
         cast(EnvironmentSatisfaction as int) as environment_satisfaction,
-        Gender as gender,
+        {{ clean_strings('Gender')}}  as gender,
         cast(HourlyRate as int) as hourly_rate,
         cast(JobInvolvement as int) as job_involvement,
         cast(JobLevel as int) as job_level,
-        JobRole as job_role,
+        {{ clean_strings('JobRole') }}  as job_role,
         cast(JobSatisfaction as int) as job_satisfaction,
-        MaritalStatus as marital_status,
+        {{ clean_strings('MaritalStatus')}}  as marital_status,
         cast(MonthlyIncome as int) as monthly_income,
         cast(MonthlyRate as int) as monthly_rate,
         cast(NumCompaniesWorked as int) as num_companies_worked,
@@ -56,70 +61,19 @@ with get_raw_data_and_cast as
                 else 'Not Allowed'
             end as business_travel,	
             daily_rate,
-            case when department = 'Sales'
-                then 'Sales'
-                when department = 'Research & Development'
-                then 'Research & Development'
-                when department = 'Human Resources'
-                then 'Human Resources'
-                else 'Not Allowed'
-            end as department,
+            department,
             distance_from_home,
             education,
-            case when education_field = 'Human Resources' 
-                then 'Human Resources'
-                when education_field = 'Life Sciences'
-                then 'Life Sciences'
-                when education_field = 'Marketing'
-                then 'Marketing'
-                when education_field ='Medical'
-                then 'Medical'
-                when education_field ='Other'
-                then 'Other'
-                when education_field ='Technical Degree'
-                then 'Technical Degree'
-                else 'Not Allowed'
-            end as education_field,
+            education_field,
             employee_number,
             environment_satisfaction,
-            case when gender = 'Male'
-                then 'Male'
-                when gender = 'Female'
-                then 'Female'
-                else 'Other'  
-            end as gender,
+            gender,
             hourly_rate,
             job_involvement,
             job_level,
-            case when job_role = 'Healthcare Representative'
-                then 'Healthcare Representative' 
-                when job_role = 'Human Resources'
-                then 'Human Resources'
-                when job_role = 'Laboratory Technician'
-                then 'Laboratory Technician'
-                when job_role = 'Manager'
-                then 'Manager'
-                when job_role = 'Manufacturing Director'
-                then 'Manufacturing Director'
-                when job_role = 'Research Director'
-                then 'Research Director'
-                when job_role = 'Research Scientist'
-                then 'Research Scientist'
-                when job_role = 'Sales Executive'
-                then 'Sales Executive'
-                when job_role = 'Sales Representative'
-                then 'Sales Representative'
-                else 'Not Allowed'
-            end as job_role,
+            job_role,
             job_satisfaction,
-            case when marital_status = 'Single'
-                then 'Single'
-                when marital_status = 'Married'
-                then 'Married'
-                when marital_status = 'Divorced'
-                then 'Divorced'
-                else 'Not Allowed'
-            end as marital_status,
+            marital_status,
             monthly_income,
             monthly_rate,
             num_companies_worked,

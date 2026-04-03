@@ -9,8 +9,10 @@ models:
                   description: Every employee record must have an age.
                   config:
                     severity: error
-          - test_less_than_eighteen:
-              description: This test checks if the age of any employee is less than 18. Keeping the severity warn here as there could be some interns that we have hired and their age will not be 18 or over.
+          - test_custom_range:
+              description: This test checks if the age of any employee is between 18 and 100. Keeping the severity warn here as there could be some interns that we have hired and their age will not be 18 or over.
+              min_val: 18
+              max_val: 100
               config:
                 severity: warn
       - name: attrition
