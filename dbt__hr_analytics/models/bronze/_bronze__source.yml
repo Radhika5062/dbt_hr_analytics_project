@@ -407,7 +407,44 @@ sources:
                   description: All records must have a creation timestamp for audit and lineage tracking.
                   config:
                     severity: error
+  
+      - name: config_thresholds
+        columns: 
+          - name: config_key
+            description: This is the config key value. 
+            data_tests:
+              - not_null:
+                  description: All the records should be not null
+                  config:
+                    severity: error
+          
+          - name: config_value
+            description: This defines the value for the config key. 
+            data_tests:
+              - not_null:
+                  config:
+                    severity: error 
+          
+          - name: description
+            description: This column gives a description about the config key. 
+            data_tests:
+              - not_null:
+                  config:
+                    severity: warn 
 
+          - name: updated_by
+            description: This column indicates who updated the value
+            data_tests:
+              - not_null:
+                  config:
+                    severity: warn 
+          
+          - name: updated_at
+            description: This column indicates when the value was updated
+            data_tests:
+              - not_null:
+                  config:
+                    severity: error 
 
 
 

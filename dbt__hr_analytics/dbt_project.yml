@@ -41,9 +41,17 @@ models:
     silver:
       +materialized: table
       +schema: silver
+    gold:
+      +materialized: table
+      +schema: gold
+    staging:
+      +materialized: view
+      +schema: stg
+
           
     +materialized: view
     +schema: demo
+
 
 seeds:
   dbt__hr_analytics:

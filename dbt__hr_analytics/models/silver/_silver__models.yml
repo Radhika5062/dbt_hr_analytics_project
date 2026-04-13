@@ -39,3 +39,95 @@ models:
       
       - name: quarantined_at
         description: Time when the record was quarantined
+  
+  - name: silver_employee_enriched
+    description: In this multiple new columns are added to the table. Some of them are flags, some of them are buckets to group the data together and others are to normalise columns.
+    columns:
+      - name: flag_attrited
+        description:  This column is flag to show whether the employee is still working in business or not. 
+        data_tests:
+          - not_null:
+              description: This is to ensure that for every employee we have the indication of whether they are working or not. 
+              config:
+                severity: warn
+          - accepted_values:
+              description: The accepted values are o and 1
+              arguments:
+                values: [0, 1]
+              config:
+                severity: error   
+      - name: flag_overtime
+        description: This column is flag to show whether the employee works overtime or not. 
+        data_tests:
+          - not_null:
+              description: This is to ensure that for every employee we have the indication of whether they work overtime or not.
+              config:
+                severity: warn
+          - accepted_values:
+              arguments:
+                values: [0,1]
+              config:
+                severity: error
+      - name: bucket_age_group
+        description: This column is to group employees into age buckets. 
+        data_tests:
+          - not_null:
+              description: This is to ensure that the age bucket is not empty. 
+              config:
+                severity: warn
+          - accepted_values:
+              arguments:
+                values: ['18-24 years', '25-34 years', '35-44 years', '45+ years']
+              config:
+                severity: error
+      - name: bucket_tenure_group
+        description: This column is to group employees into tenure buckets. 
+        data_tests:
+          - not_null:
+              description: This is to ensure that the tenure bucket is not empty. 
+              config:
+                severity: warn
+          - accepted_values:
+              arguments:
+                values: ['0-1 year', '2-5 years', '6-10 years', '10+ years']
+              config:
+                severity: error
+      - name: derived_prior_experience_years
+        description: This column tells about the number of years the employee has worked before joining this company. It is the difference between total_working_years and years_at_company.
+        data_tests:
+          - not_null:
+              description: This is to ensure that we always have a value for derived_prior_experience_years column. 
+              config:
+                severity: warn
+          - test_less_than_val:
+              description: This test is to ensure that the value is never neagtive as the number of years of experience can never be negative.
+              arguments:
+                val: 0
+              config:
+                severity: error
+      - name: derived_career_stagnation_years
+        description: This column tells how many years has it been since the last promotion. It is the difference between years_at_company and years_since_last_promotion. 
+        data_tests:
+          - not_null:
+              description: derived_career_stagnation_years column should not be null
+              config:
+                severity: warn
+          - test_less_than_val:
+              description: This test is to ensure that the value is never negative.
+              arguments:
+                val: 0
+              config:
+                severity: error
+      - name: derived_years_since_role_change
+        description: This column shows how long has it been since the employee has changed roles. It is the difference between years_at_company and years_in_current_role.
+        data_tests:
+          - not_null: 
+              description: This is to ensure that the derived_years_since_role_change is never null.
+              config:
+                severity: warn
+          - test_less_than_val:
+              description: This is to ensure that the value for this column is never less than 0. 
+              arguments:
+                val: 0
+              config:
+                severity: error

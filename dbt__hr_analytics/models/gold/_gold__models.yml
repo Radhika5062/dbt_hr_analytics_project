@@ -1,0 +1,268 @@
+models:
+  - name: gold_attrition_features
+    description: Each row represents one employee with cleaned buckets and risk flags derived from silver_employee_enriched.
+    columns:
+      - name: employee_number
+        description: Unique identifier for employee.
+        data_tests:
+          - unique:
+              config:
+                severity: error
+          - not_null:
+              config:
+                severity: error
+      
+      - name: bucket_seniority_band
+        description: >
+          Seniority based on internal job grade level driven by config threshold senior_employee_min_level. 
+        data_tests:
+          - not_null:
+              config:
+                severity: warn
+          - accepted_values:
+              values: ['Senior Grade', 'Junior Grade']
+              config:
+                severity: error
+      
+      - name: bucket_income_band
+        description: >
+          Monthly income categorised as Low, Medium or High.
+          Thresholds driven by income_band_low_max and income_band_high_min in config table
+        data_tests:
+          - not_null:
+              config:
+                severity: warn
+          - accepted_values:
+              values: ['Low', 'Medium', 'High']
+              config:
+                severity: error
+      
+      - name: bucket_experience_band
+        description: >
+          Career experience based on total working years across all companies.
+          Thresholds driven by experience_band_junior_max and experience_band_mid_max in config table
+        data_tests:
+          - not_null:
+              config:
+                severity: warn
+          - accepted_values:
+              values: ['Junior', 'Mid Level', 'Experienced']
+              config:
+                severity: error
+      
+      - name: bucket_mobility_band
+        description: >
+          Job mobility based on average years per company compared to company average.
+          High Mobility = changes jobs more frequently than company average
+        data_tests:
+          - not_null:
+              config:
+                severity: warn
+          - accepted_values:
+              values: ['Unknown', 'Stable Single Employer', 'Normal Mobility', 'High Mobility']
+              config:
+                severity: error
+      
+      - name: flag_high_performer
+        description: >
+          1 if performance rating is at or above high_performer_min_rating threshold.
+        data_tests:
+          - not_null:
+              config:
+                severity: warn
+          - accepted_values:
+              values: [0, 1]
+              config:
+                severity: error
+      
+      - name: flag_long_tenure
+        description: >
+          1 if years at company is at or above long_tenure_min_years threshold.
+        data_tests:
+          - not_null:
+              config:
+                severity: warn
+          - accepted_values:
+              values: [0, 1]
+              config:
+                severity: error
+      
+      - name: flag_low_job_satisfaction
+        description: 1 if job satisfaction score is at or below low_satisfaction_max threshold
+        data_tests:
+          - not_null:
+              config:
+                severity: warn
+          - accepted_values:
+              values: [0, 1]
+              config:
+                severity: error
+      
+      - name: flag_poor_work_life_balance
+        description: 1 if work life balance score is at or below poor_work_life_balance_max threshold
+        data_tests:
+          - not_null:
+              config:
+                severity: warn
+          - accepted_values:
+              values: [0, 1]
+              config:
+                severity: error
+      
+      - name: flag_overtime
+        description: 1 if employee works overtime
+        data_tests:
+          - not_null:
+              config:
+                severity: warn
+          - accepted_values:
+              values: [0, 1]
+              config:
+                severity: error
+      
+      - name: flag_career_stagnation
+        description: 1 if employee has not been promoted for stagnation_years_min or more years
+        data_tests:
+          - not_null:
+              config:
+                severity: warn
+          - accepted_values:
+              values: [0, 1]
+              config:
+                severity: error
+      
+      - name: flag_long_commute
+        description: 1 if employee commute distance is above company average commute distance
+        data_tests:
+          - not_null:
+              config:
+                severity: warn
+          - accepted_values:
+              values: [0, 1]
+              config:
+                severity: error
+      
+      - name: flag_no_training
+        description: 1 if employee received no training in the last year
+        data_tests:
+          - not_null:
+              config:
+                severity: warn
+          - accepted_values:
+              values: [0, 1]
+              config:
+                severity: error
+
+      - name: flag_low_salary_hike
+        description: 1 if salary hike percent is at or below low_salary_hike_max threshold
+        data_tests:
+          - not_null:
+              config:
+                severity: warn
+          - accepted_values:
+              values: [0, 1]
+              config:
+                severity: error
+      
+      - name: flag_new_manager
+        description: 1 if employee has been with current manager for new_manager_max_years or less
+        data_tests:
+          - not_null:
+              config:
+                severity: warn
+          - accepted_values:
+              values: [0, 1]
+              config:
+                severity: error
+      
+      - name: silver_layer_ingestion_timestamp
+        description: Timestamp of when this employee record was created in the silver layer
+        data_tests:
+          - not_null:
+              config:
+                severity: error
+
+      - name: created_at_gold_features
+        description: Timestamp of when this record was last refreshed by this gold model
+        data_tests:
+          - not_null:
+              config:
+                severity: error
+  
+  - name: gold_attrition_scoring
+    description: >
+      Gold scoring model for HR attrition risk analysis. Each row represents one employee
+      with a weighted attrition risk score and risk band (Critical / High / Medium / Low).
+      Built on top of gold_employee_features. Primary table for HR dashboards and
+      retention prioritisation. Max possible risk score is 12.
+    columns: 
+      - name: attrition_risk_score
+        description: >
+          Weighted sum of attrition risk flags. flag_high_performer and flag_long_tenure
+          count as 2. All other flags count as 1. Max possible score is 12.
+        data_tests:
+          - not_null:
+              config:
+                severity: error
+
+      - name: attrition_risk_score_max
+        description: Maximum possible attrition risk score. Always 12.
+        data_tests:
+          - not_null:
+              config:
+                severity: error
+
+      - name: attrition_risk_score_pct
+        description: Attrition risk score expressed as a percentage of the maximum possible score
+        data_tests:
+          - not_null:
+              config:
+                severity: error
+
+      - name: attrition_risk_band
+        description: >
+          Human readable risk category derived from attrition_risk_score.
+        data_tests:
+          - not_null:
+              config:
+                severity: error
+          - accepted_values:
+              values: ['Critical', 'High', 'Medium', 'Low']
+              config:
+                severity: error
+
+      - name: config_risk_band_critical_min
+        description: Threshold used to classify Critical risk band at time of run. Carried for audit.
+        data_tests:
+          - not_null:
+              config:
+                severity: error
+
+      - name: config_risk_band_high_min
+        description: Threshold used to classify High risk band at time of run. Carried for audit.
+        data_tests:
+          - not_null:
+              config:
+                severity: error
+
+      - name: config_risk_band_medium_min
+        description: Threshold used to classify Medium risk band at time of run. Carried for audit.
+        data_tests:
+          - not_null:
+              config:
+                severity: error
+      
+      - name: created_at_gold_features
+        description: Timestamp of when this employee record was last refreshed in gold_employee_features
+        data_tests:
+          - not_null:
+              config:
+                severity: error
+
+      - name: updated_at
+        description: Timestamp of when this record was last refreshed by this model
+        data_tests:
+          - not_null:
+              config:
+                severity: error
+
