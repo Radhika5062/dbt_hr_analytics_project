@@ -1,6 +1,7 @@
 {{
     config(
-        database = get_database(var('env'))
+        database = get_database(var('env')),
+        materialized='incremental'
     )
 }}
 
@@ -43,6 +44,9 @@ with get_raw_data_and_cast as
         cast(YearsWithCurrManager as int) as years_with_current_manager,
         created_at
         from {{ source('staging', 'hr_data')}}
+        {% if is_incremental() %}
+            where to_date(created_at, 'DD/MM/YYYY') > (select max(to_date(created_at,  'DD/MM/YYYY')) from {{ this }})
+        {% endif %}
     ),
     clean_strings as (
          select 

@@ -4,19 +4,10 @@
     )
 }}
 
-with config as 
+with config_pivoted as
 (
-    select config_key, config_value
-    from {{ ref('stg_config_threshold') }}
-    qualify row_number() over (partition by config_key order by updated_at desc) = 1
-),
-config_pivoted as
-(
-    select
-        max(case when config_key = 'risk_band_critical_min' then config_value end) as risk_band_critical_min,
-        max(case when config_key = 'risk_band_high_min'     then config_value end) as risk_band_high_min,
-        max(case when config_key = 'risk_band_medium_min'   then config_value end) as risk_band_medium_min
-    from config
+    select * 
+    from {{ ref('gold_config_thresholds_ephemeral') }}
 ),
 
 add_score as 

@@ -1,3 +1,8 @@
+{{
+    config(
+        database = get_database(var('env'))
+    )
+}}
 with base as
 (
     select 
