@@ -1,0 +1,10 @@
+snapshots:
+  - name: hr_data_snapshot
+    relation: ref('bronze_snapshot_ephemeral')
+    description: This is to preserver history
+    config:
+      database: snapshot 
+      schema: snapshot_sch
+      strategy: timestamp
+      updated_at: created_at
+      unique_key: employeenumber
