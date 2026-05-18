@@ -9,7 +9,7 @@ with base as
         employeenumber,
         monthlyincome,
         stockoptionlevel,
-        try_to_date(created_at, 'DD/MM/YYYY') as created_at
+        try_to_timestamp(created_at, 'DD/MM/YYYY') as created_at
        from {{ source('staging', 'hr_data')}}
     )
 select * 

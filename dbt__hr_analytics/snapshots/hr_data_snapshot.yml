@@ -5,6 +5,7 @@ snapshots:
     config:
       database: snapshot 
       schema: snapshot_sch
-      strategy: timestamp
-      updated_at: created_at
+      strategy: check
+      check_cols: ['monthlyincome', 'stockoptionlevel']
       unique_key: employeenumber
+      dbt_valid_to_current: "to_date('9999-12-31')"
