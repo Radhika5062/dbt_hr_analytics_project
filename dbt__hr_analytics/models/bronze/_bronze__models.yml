@@ -1,6 +1,8 @@
 models:
   - name: bronze_hr_data
-    description: This is the bronze model for hr_data coming from snowflake. In this model we are doing following things - 1. Renaming column names to use snake case. 2. Casting the columns in their right datatype. 3. Converting the values into standard values. 
+    description: >
+      One row per employee.
+      This is the bronze model for hr_data coming from snowflake. In this model we are doing following things - 1. Renaming column names to use snake case. 2. Casting the columns in their right datatype. 3. Converting the values into standard values. 
     columns:
       - name: age
         description: Age of the employee
@@ -16,7 +18,7 @@ models:
               config:
                 severity: warn
       - name: attrition
-        description: Employee Attrition. Converted the Yes and No values for this field coming from source to 1 and 0 respectively. 
+        description: Emee Attrition. Converted the Yes and No values for this field coming from source to 1 and 0 respectively. 
         data_tests:
           - not_null:
                   description: Attrition is a core HR metric and must not be null.
@@ -28,7 +30,7 @@ models:
               config:
                 severity: error
       - name: business_travel
-        description: Does employee travel for business. Cleanup values from source. 
+        description: "{{ doc('business_travel') }}"
         data_tests:
           - not_null:
                   description: Business travel classification must be present for every employee.
@@ -106,7 +108,7 @@ models:
               arguments:
                 values: ['Human Resources', 'Life Sciences', 'Marketing', 'Medical', 'Other', 'Technical Degree'] 
       - name: employee_number
-        description: Unique identifier for the employee
+        description: "{{ doc('employee_id') }}"
         data_tests:
           - unique:
               description: This test is to ensure that the employee number is unique as this is the unique identifier for an employee in the organisation.

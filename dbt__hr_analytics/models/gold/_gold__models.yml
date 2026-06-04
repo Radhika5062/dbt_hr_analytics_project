@@ -1,9 +1,9 @@
 models:
-  - name: gold_attrition_features
+  - name: gold_employee_features
     description: Each row represents one employee with cleaned buckets and risk flags derived from silver_employee_enriched.
     columns:
       - name: employee_number
-        description: Unique identifier for employee.
+        description: "{{ doc('employee_id') }}"
         data_tests:
           - unique:
               config:

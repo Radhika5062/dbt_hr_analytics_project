@@ -3,6 +3,7 @@ sources:
     description: This is the source of truth
     database: hr_analytics
     schema: staging
+    loader: s3_stage_snowflake
     tables:
       - name: hr_data
         description: Includes all HR data for each employee in one place Each row corresponds to a different employee
