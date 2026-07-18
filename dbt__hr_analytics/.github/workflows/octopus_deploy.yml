@@ -32,3 +32,4 @@ jobs:
           OCTOPUS_SPACE: ${{ secrets.OCTOPUS_SPACE }}
         run: |
           octopus release create --project "hr_analytics" --package-version ${{ github.run_number }}
+          
