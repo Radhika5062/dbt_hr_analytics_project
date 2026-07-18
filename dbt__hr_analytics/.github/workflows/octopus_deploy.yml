@@ -1,0 +1,34 @@
+name: Package and Push to Octopus
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Octopus CLI
+        uses: OctopusDeploy/install-octopus-cli-action@v3
+
+      - name: Package dbt project
+        run: |
+          zip -r dbt-project.${{ github.run_number }}.zip . -x ".git/*"
+
+      - name: Push package to Octopus
+        env:
+          OCTOPUS_URL: ${{ secrets.OCTOPUS_URL }}
+          OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
+          OCTOPUS_SPACE: ${{ secrets.OCTOPUS_SPACE }}
+        run: |
+          octopus package upload --package dbt-project.${{ github.run_number }}.zip
+
+      - name: Create Octopus Release
+        env:
+          OCTOPUS_URL: ${{ secrets.OCTOPUS_URL }}
+          OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
+          OCTOPUS_SPACE: ${{ secrets.OCTOPUS_SPACE }}
+        run: |
+          octopus release create --project "YourProjectName" --package-version ${{ github.run_number }}
