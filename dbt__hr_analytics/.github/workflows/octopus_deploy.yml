@@ -31,4 +31,4 @@ jobs:
           OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
           OCTOPUS_SPACE: ${{ secrets.OCTOPUS_SPACE }}
         run: |
-          octopus release create --project "YourProjectName" --package-version ${{ github.run_number }}
+          octopus release create --project "hr_analytics" --package-version ${{ github.run_number }}
